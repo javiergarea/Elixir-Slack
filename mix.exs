@@ -12,6 +12,8 @@ defmodule Slack.Mixfile do
       docs: docs(),
       source_url: "https://github.com/BlakeWilliams/Elixir-Slack",
       description: "A Slack Real Time Messaging API client.",
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [coveralls: :test],
       package: package()
     ]
   end
@@ -31,6 +33,7 @@ defmodule Slack.Mixfile do
       {:ex_doc, "~> 0.19", only: :dev},
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:plug, "~> 1.6", only: :test},
+      {:excoveralls, "~> 0.10", only: :test},
       {:cowboy, "~> 1.0.0", only: :test}
     ]
   end

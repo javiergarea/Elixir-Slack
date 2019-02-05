@@ -2,6 +2,7 @@
 
 [![Build
 Status](https://travis-ci.com/javiergarea/Elixir-Slack.svg?branch=master)](https://travis-ci.com/javiergarea/Elixir-Slack/settings)
+[![Coverage Status](https://coveralls.io/repos/github/javiergarea/Elixir-Slack/badge.svg?branch=master)](https://coveralls.io/github/javiergarea/Elixir-Slack?branch=master)
 
 This is a Slack [Real Time Messaging API] client for Elixir.  You'll need a
 Slack API token which can be retrieved from the [Web API page] or by creating a
