@@ -1,5 +1,5 @@
 defmodule Slack.Lookups do
-  @moduledoc "Utility functions for looking up slack state informatin"
+  @moduledoc "Utility functions for looking up slack state information"
 
   @doc ~S"""
   Turns a string like `"@USER_NAME"` into the ID that Slack understands (`"U…"`).
