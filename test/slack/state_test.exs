@@ -2,6 +2,45 @@ defmodule Slack.StateTest do
   use ExUnit.Case
   alias Slack.State
 
+  defp slack do
+    %{
+      channels: %{
+        "123" => %{
+          id: 123,
+          name: "foo",
+          is_member: nil,
+          is_archived: nil,
+          members: ["U123"]
+        }
+      },
+      team: %{
+        name: "Foo"
+      },
+      users: %{
+        "123" => %{
+          name: "Bar",
+          presence: "active"
+        },
+        "U2" => %{
+          name: "Baz",
+          presence: "away"
+        }
+      },
+      groups: %{
+        "G000" => %{
+          name: "secret-group",
+          members: ["U111", "U222"]
+        }
+      },
+      bots: %{
+        "123" => %{
+          name: "Bot"
+        }
+      },
+      ims: %{}
+    }
+  end
+
   test "channel_joined sets is_member to true" do
     new_slack =
       State.update(
@@ -243,44 +282,5 @@ defmodule Slack.StateTest do
              name: "Bar",
              presence: "active"
            }
-  end
-
-  defp slack do
-    %{
-      channels: %{
-        "123" => %{
-          id: 123,
-          name: "foo",
-          is_member: nil,
-          is_archived: nil,
-          members: ["U123"]
-        }
-      },
-      team: %{
-        name: "Foo"
-      },
-      users: %{
-        "123" => %{
-          name: "Bar",
-          presence: "active"
-        },
-        "U2" => %{
-          name: "Baz",
-          presence: "away"
-        }
-      },
-      groups: %{
-        "G000" => %{
-          name: "secret-group",
-          members: ["U111", "U222"]
-        }
-      },
-      bots: %{
-        "123" => %{
-          name: "Bot"
-        }
-      },
-      ims: %{}
-    }
   end
 end
