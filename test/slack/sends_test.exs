@@ -30,7 +30,20 @@ defmodule Slack.SendsTest do
     }
 
     result = Sends.send_message("hello", "#channel", slack)
+
     assert result == {nil, ~s/{"type":"message","text":"hello","channel":"C456"}/}
+  end
+
+  test "send_message raises an ArgumentException when channel does not exist" do
+    slack = %{
+      process: nil,
+      client: FakeWebsocketClient,
+      channels: %{"C456" => %{name: "channel", id: "C456"}},
+      groups: %{"G456" => %{name: "channel", id: "G456"}}
+    }
+    assert_raise ArgumentError, "channel #channel2 not found", fn ->
+      Sends.send_message("hello", "#channel2", slack)
+    end
   end
 
   test "send_message understands @user names" do
