@@ -8,4 +8,5 @@ matrix:
       elixir: 1.4.0
       env: MIX_ENV=test
 after_success:
+  - mix mutation
   - mix coveralls.travis
