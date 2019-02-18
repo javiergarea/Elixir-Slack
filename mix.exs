@@ -33,8 +33,10 @@ defmodule Slack.Mixfile do
       {:ex_doc, "~> 0.19", only: :dev},
       {:credo, "~> 0.5", only: [:dev, :test]},
       {:plug, "~> 1.6", only: :test},
+      {:cowboy, "~> 1.0.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
-      {:cowboy, "~> 1.0.0", only: :test}
+      {:dialyxir, "~> 0.4", only: [:dev]},
+      {:mutation, "~> 0.1.0"}
     ]
   end
 
