@@ -65,7 +65,10 @@ defmodule Slack.BotTest do
     Application.put_env(:slack, :rtm_module, Stubs.Slack.Rtm)
 
     {:ok, pid} =
-             Slack.Bot.start_link(Bot, %{}, "token", %{client: Stubs.Slack.WebsocketClient, name: :slack_bot})
+      Slack.Bot.start_link(Bot, %{}, "token", %{
+        client: Stubs.Slack.WebsocketClient,
+        name: :slack_bot
+      })
 
     Application.put_env(:slack, :rtm_module, original_slack_rtm)
 

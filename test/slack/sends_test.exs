@@ -41,6 +41,7 @@ defmodule Slack.SendsTest do
       channels: %{"C456" => %{name: "channel", id: "C456"}},
       groups: %{"G456" => %{name: "channel", id: "G456"}}
     }
+
     assert_raise ArgumentError, "channel #channel2 not found", fn ->
       Sends.send_message("hello", "#channel2", slack)
     end
