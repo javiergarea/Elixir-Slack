@@ -64,6 +64,7 @@ defmodule Slack.LookupsTest do
     slack = %{
       bots: %{"B456" => %{name: "user", id: "B456"}}
     }
+
     assert Lookups.lookup_user_name("B456", slack) == "@user"
   end
 
