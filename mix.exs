@@ -22,8 +22,13 @@ defmodule Slack.Mixfile do
   defp elixirc_paths(_), do: ["lib"]
 
   def application do
-    [applications: [:logger, :httpoison, :hackney, :crypto, :websocket_client]]
+    [
+      applications: [:logger, :httpoison, :hackney, :crypto, :websocket_client],
+      extra_applications: [:stream_data]
+    ]
   end
+
+  
 
   defp deps do
     [
@@ -36,7 +41,8 @@ defmodule Slack.Mixfile do
       {:cowboy, "~> 1.0.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
       {:dialyxir, "~> 0.4", only: [:dev]},
-      {:mutation, "~> 0.1.0"}
+      {:mutation, "~> 0.1.0"},
+      {:stream_data, "~> 0.1", only: :test}
     ]
   end
 
