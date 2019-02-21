@@ -7,5 +7,8 @@ matrix:
     - otp_release: 19.2
       elixir: 1.4.0
       env: MIX_ENV=test
+    - otp_release: 21
+      elixir: 1.8.1
+      env: MIX_ENV=test
 after_success:
   - mix coveralls.travis
