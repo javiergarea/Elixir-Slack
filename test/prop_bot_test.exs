@@ -8,15 +8,15 @@ defmodule PropBotTest do
   end
 
   property "init formats rtm results properly" do
-    check all token_test <- my_string_gen(),
-              url_test <- my_string_gen(),
-              self_name_test <- my_string_gen(),
-              team_name_test <- my_string_gen(),
-              bots_id_test <- my_string_gen(),
-              channels_id_test <- my_string_gen(),
-              groups_id_test <- my_string_gen(),
-              users_id_test <- my_string_gen(),
-              ims_id_test <- my_string_gen() do
+    check all token_test <- StreamData.string(:ascii),
+              url_test <- CustomDataGen.custom_url_gen(),
+              self_name_test <- StreamData.string(:ascii),
+              team_name_test <- StreamData.string(:ascii),
+              bots_id_test <- CustomDataGen.custom_id_gen("B"),
+              channels_id_test <- CustomDataGen.custom_id_gen("C"),
+              groups_id_test <- CustomDataGen.custom_id_gen("G"),
+              users_id_test <- CustomDataGen.custom_id_gen("U"),
+              ims_id_test <- CustomDataGen.custom_id_gen("D") do
       {:reconnect, %{slack: slack, bot_handler: bot_handler}} =
         Slack.Bot.init(%{
           bot_handler: Bot,
@@ -59,30 +59,24 @@ defmodule PropBotTest do
   end
 
   property "can register the process with a given name" do
-    check all name <- my_string_gen() do
+    check all name_test <- StreamData.string(:ascii),
+              token_test <- StreamData.string(:ascii) do
       original_slack_rtm = Application.get_env(:slack, :rtm_module, Slack.Rtm)
 
       Application.put_env(:slack, :rtm_module, Stubs.Slack.Rtm)
 
       {:ok, pid} =
-        Slack.Bot.start_link(Bot, %{}, "token", %{
+        Slack.Bot.start_link(Bot, %{}, token_test, %{
           client: Stubs.Slack.WebsocketClient,
-          name: String.to_atom(name)
+          name: String.to_atom(name_test)
         })
 
       Application.put_env(:slack, :rtm_module, original_slack_rtm)
 
-      expected_pid = Process.whereis(String.to_atom(name))
-      Process.unregister(String.to_atom(name))
+      expected_pid = Process.whereis(String.to_atom(name_test))
+      Process.unregister(String.to_atom(name_test))
 
       assert expected_pid == pid
-    end
-  end
-
-  defp my_string_gen() do
-    ExUnitProperties.gen all string <-
-                               member_of(["Hola"]) do
-      string
     end
   end
 end
