@@ -20,13 +20,6 @@ defmodule CustomDataGen do
     end
   end
 
-  def channel_name_gen do
-    ExUnitProperties.gen all string <- string_gen(),
-                             String.starts_with?(string, "U") != true do
-      string
-    end
-  end
-
   def map_gen(_n) do
     ExUnitProperties.gen all map <-
                                member_of([%{foo: :bar}]) do

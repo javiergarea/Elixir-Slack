@@ -54,7 +54,8 @@ defmodule Slack.PropLookupsTest do
 
   property "turns #channel into a channel identifier" do
     check all channel_id_test <- CustomDataGen.id_gen("C"),
-              channel_name_test <- CustomDataGen.channel_name_gen() do
+              channel_name_test <- CustomDataGen.string_gen(),
+              String.starts_with?(channel_name_test, "U") != true do
       slack = %{
         channels: %{
           channel_id_test => %{name: channel_name_test, id: channel_id_test}
@@ -78,7 +79,8 @@ defmodule Slack.PropLookupsTest do
   end
 
   property "turns unknown #channel into nil" do
-    check all channel_name_test <- CustomDataGen.channel_name_gen() do
+    check all channel_name_test <- CustomDataGen.string_gen(),
+              String.starts_with?(channel_name_test, "U") != true do
       slack = %{
         channels: %{},
         groups: %{}
@@ -137,7 +139,8 @@ defmodule Slack.PropLookupsTest do
 
   property "turns a channel identifier into #channel" do
     check all channel_id_test <- CustomDataGen.id_gen("C"),
-              channel_name_test <- CustomDataGen.channel_name_gen() do
+              channel_name_test <- CustomDataGen.string_gen(),
+              String.starts_with?(channel_name_test, "U") != true do
       slack = %{
         channels: %{
           channel_id_test => %{name: channel_name_test, id: channel_id_test}
@@ -151,7 +154,8 @@ defmodule Slack.PropLookupsTest do
 
   property "turns a private channel identifier into #channel" do
     check all group_id_test <- CustomDataGen.id_gen("G"),
-              channel_name_test <- CustomDataGen.channel_name_gen() do
+              channel_name_test <- CustomDataGen.string_gen(),
+              String.starts_with?(channel_name_test, "U") != true do
       slack = %{
         channels: %{},
         groups: %{
