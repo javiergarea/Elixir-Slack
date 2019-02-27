@@ -8,15 +8,15 @@ defmodule PropBotTest do
   end
 
   property "init formats rtm results properly" do
-    check all token_test <- StreamData.string(:ascii),
-              url_test <- CustomDataGen.custom_url_gen(),
-              self_name_test <- StreamData.string(:ascii),
-              team_name_test <- StreamData.string(:ascii),
-              bots_id_test <- CustomDataGen.custom_id_gen("B"),
-              channels_id_test <- CustomDataGen.custom_id_gen("C"),
-              groups_id_test <- CustomDataGen.custom_id_gen("G"),
-              users_id_test <- CustomDataGen.custom_id_gen("U"),
-              ims_id_test <- CustomDataGen.custom_id_gen("D") do
+    check all token_test <- CustomDataGen.string_gen(),
+              url_test <- CustomDataGen.url_gen(),
+              self_name_test <- CustomDataGen.string_gen(),
+              team_name_test <- CustomDataGen.string_gen(),
+              bots_id_test <- CustomDataGen.id_gen("B"),
+              channels_id_test <- CustomDataGen.id_gen("C"),
+              groups_id_test <- CustomDataGen.id_gen("G"),
+              users_id_test <- CustomDataGen.id_gen("U"),
+              ims_id_test <- CustomDataGen.id_gen("D") do
       {:reconnect, %{slack: slack, bot_handler: bot_handler}} =
         Slack.Bot.init(%{
           bot_handler: Bot,
@@ -59,8 +59,8 @@ defmodule PropBotTest do
   end
 
   property "can register the process with a given name" do
-    check all name_test <- StreamData.string(:ascii),
-              token_test <- StreamData.string(:ascii) do
+    check all name_test <- CustomDataGen.string_gen(),
+              token_test <- CustomDataGen.string_gen() do
       original_slack_rtm = Application.get_env(:slack, :rtm_module, Slack.Rtm)
 
       Application.put_env(:slack, :rtm_module, Stubs.Slack.Rtm)
