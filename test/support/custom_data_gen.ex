@@ -20,17 +20,25 @@ defmodule CustomDataGen do
     end
   end
 
-  def map_gen(_n) do
-    ExUnitProperties.gen all map <-
-                               member_of([%{foo: :bar}]) do
+  @presence_values ["active", "away"]
+
+  def presence_gen do
+    ExUnitProperties.gen all presence <- StreamData.member_of(@presence_values) do
+      presence
+    end
+  end
+
+  @custom_maps [%{foo: :bar}, %{test: :tested}]
+
+  def map_gen do
+    ExUnitProperties.gen all map <- member_of(@custom_maps) do
       map
     end
   end
 
-  def list_of_string_gen do
-    ExUnitProperties.gen all map <-
-                               member_of([["%{foo: :bar}"], [], [[[]]]]) do
-      map
+  def list_of_user_ids_gen do
+    ExUnitProperties.gen all n <- StreamData.integer(0..10) do
+      Enum.take(id_gen("U"), n)
     end
   end
 end

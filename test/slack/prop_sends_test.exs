@@ -134,7 +134,7 @@ defmodule Slack.PropSendsTest do
   end
 
   property "send_ping with data sends ping + data to client" do
-    check all data_test <- CustomDataGen.map_gen(1) do
+    check all data_test <- CustomDataGen.map_gen() do
       result = Sends.send_ping(data_test, %{process: nil, client: FakeWebsocketClient})
       [key] = Map.keys(data_test)
       data_string = ~s/"#{key}":"#{Map.get(data_test, key)}"/
@@ -143,12 +143,15 @@ defmodule Slack.PropSendsTest do
   end
 
   property "subscribe_presence sends presence subscription message to client" do
-    check all user_id_list_test <- CustomDataGen.list_of_string_gen() do
+    check all user_id_list_test <- CustomDataGen.list_of_user_ids_gen() do
       result =
         Sends.subscribe_presence(user_id_list_test, %{process: nil, client: FakeWebsocketClient})
 
       assert result ==
-               {nil, ~s/{"type":"presence_sub","ids":#{Kernel.inspect(user_id_list_test)}}/}
+               {nil,
+                ~s/{"type":"presence_sub","ids":#{
+                  Kernel.inspect(user_id_list_test) |> String.replace(", ", ",")
+                }}/}
     end
   end
 end
