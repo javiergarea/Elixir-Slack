@@ -38,8 +38,6 @@ defmodule Slack.Mixfile do
       {:plug, "~> 1.6", only: :test},
       {:cowboy, "~> 1.0.0", only: :test},
       {:excoveralls, "~> 0.10", only: :test},
-      {:dialyxir, "~> 0.4", only: [:dev]},
-      {:mutation, "~> 0.1.0"},
       {:stream_data, "~> 0.1", only: :test}
     ]
   end
