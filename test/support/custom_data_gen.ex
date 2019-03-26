@@ -21,18 +21,16 @@ defmodule CustomDataGen do
   end
 
   @presence_values ["active", "away"]
-
   def presence_gen do
     ExUnitProperties.gen all presence <- StreamData.member_of(@presence_values) do
       presence
     end
   end
 
-  @custom_maps [%{foo: :bar}, %{test: :tested}]
-
   def map_gen do
-    ExUnitProperties.gen all map <- member_of(@custom_maps) do
-      map
+    ExUnitProperties.gen all key <- string_gen(),
+                             value <- string_gen() do
+      %{String.to_atom(key) => String.to_atom(value)}
     end
   end
 

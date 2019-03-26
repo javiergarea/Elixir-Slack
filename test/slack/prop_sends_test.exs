@@ -136,9 +136,11 @@ defmodule Slack.PropSendsTest do
   property "send_ping with data sends ping + data to client" do
     check all data_test <- CustomDataGen.map_gen() do
       result = Sends.send_ping(data_test, %{process: nil, client: FakeWebsocketClient})
+
       [key] = Map.keys(data_test)
       data_string = ~s/"#{key}":"#{Map.get(data_test, key)}"/
-      assert result == {nil, ~s/{"type":"ping",#{data_string}}/}
+      {nil, result_string} = result
+      assert result_string == ~s/{#{data_string}, "type":"ping",}/
     end
   end
 
