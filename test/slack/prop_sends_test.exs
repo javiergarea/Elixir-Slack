@@ -140,7 +140,7 @@ defmodule Slack.PropSendsTest do
       [key] = Map.keys(data_test)
       data_string = ~s/"#{key}":"#{Map.get(data_test, key)}"/
       {nil, result_string} = result
-      assert result_string == ~s/{#{data_string},"type":"ping"}/
+      assert result_string == ~s/{"type":"ping",#{data_string}}/
     end
   end
 
