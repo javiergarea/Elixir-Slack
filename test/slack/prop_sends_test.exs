@@ -140,7 +140,8 @@ defmodule Slack.PropSendsTest do
       [key] = Map.keys(data_test)
       data_string = ~s/"#{key}":"#{Map.get(data_test, key)}"/
       {nil, result_string} = result
-      assert result_string == ~s/{"type":"ping",#{data_string}}/
+      list = String.split(result_string, ",")
+      assert Enum.map([~s/#{data_string}/, ~s/"type": "ping"/], fn x -> Enum.member?(list, x) end)
     end
   end
 

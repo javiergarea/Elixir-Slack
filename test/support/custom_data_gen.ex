@@ -28,8 +28,8 @@ defmodule CustomDataGen do
   end
 
   def map_gen do
-    ExUnitProperties.gen all key <- string_gen(),
-                             value <- string_gen() do
+    ExUnitProperties.gen all key <- StreamData.string(Enum.concat([?a..?z, ?A..?Z, [?-]])),
+                             value <- StreamData.string(Enum.concat([?a..?z, ?A..?Z, [?-]])) do
       %{String.to_atom(key) => String.to_atom(value)}
     end
   end
